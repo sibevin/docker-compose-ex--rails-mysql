@@ -1,7 +1,11 @@
 # docker-compose-ex--rails-mysql
 A docker compose example for rails + mysql development
 
-## Run docker-compose up to setup rails and mysql container
+## Prepare
+
+Make sure your docker is running and the network is connected.
+
+## Run `docker-compose up` to setup rails and mysql containers
 
 ```
 $ docker-compose up
@@ -33,19 +37,19 @@ About rails container:
 
 ## Connect to mysql from host
 
-When mysql container is ready, you can connect the mysql database from the host.
+When the mysql container is ready, you can connect the mysql database from the host.
 
 ```
-mysql -h0.0.0.0 -P7364 -urails_dev -prails_dev rails_dev
-mysql -h0.0.0.0 -P7364 -urails_test -prails_test rails_test
+$ mysql -h0.0.0.0 -P7364 -urails_dev -prails_dev rails_dev
+$ mysql -h0.0.0.0 -P7364 -urails_test -prails_test rails_test
 ```
 
 ## Attach to rails container and create a new rails app in it
 
-* Attach to rails container
+* Attach to the rails container
 
 ```
-docker attach dockercomposeexrailsmysql_rails_1
+$ docker attach dockercomposeexrailsmysql_rails_1
 root@0b16c6b479d4#
 ```
 
@@ -75,8 +79,9 @@ Use `bundle show [gemname]` to see where a bundled gem is installed.
 
 * Edit database.yml from your host
 
-When you create an app in /app, you can edit the app files in shared_folder/rails/ from your host. Change the config/database.yml as follows:
+When you create an app in /app, you can edit app files in shared_folder/rails/ from your host. Change the config/database.yml as follows:
 ```
+$ vi shared_folder/rails/my-app/config/database.yml
 default: &default
   adapter: mysql2
   encoding: utf8
@@ -139,7 +144,12 @@ http://0.0.0.0:3333
 
 ## Shutdown all containers
 
+If you use `ctrl-C` to stop `docker-compose up`, two containers are stop but not removed. Use `docker-compose down` to remove them.
+
 ```
-docker-compose down
+$ docker-compose down
+Removing dockercomposeexrailsmysql_rails_1 ... done
+Removing dockercomposeexrailsmysql_db_1 ... done
+Removing network dockercomposeexrailsmysql_default
 ```
 
