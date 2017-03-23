@@ -1,0 +1,20 @@
+version: "3"
+services:
+  db:
+    build: ./mysql
+    image: mysql:5.7-rs
+    ports:
+      - "7364:3306"
+    volumes:
+      - ./shared_folder/mysql:/var/lib/mysql
+  rails:
+    build: ./rails
+    image: rails:5.0.2-rs
+    stdin_open: true
+    tty: true
+    ports:
+      - "3333:3000"
+    volumes:
+      - ./shared_folder/rails:/app
+    depends_on:
+      - db
